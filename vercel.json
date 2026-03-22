@@ -1,6 +1,5 @@
 {
-  "routes": [
-    { "src": "/", "dest": "/AR_Entry_Page.html" },
-    { "src": "/dashboard", "dest": "/AR_Dashboard_Landing.html" }
+  "rewrites": [
+    { "source": "/dashboard", "destination": "/AR_Dashboard_Landing.html" }
   ]
 }
