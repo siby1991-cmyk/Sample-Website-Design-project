@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR Intelligence — Agilysys HSG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  /* ── Dark mode defaults ── */
+  --bg:        #000000;
+  --bg2:       #070707;
+  --card:      #111111;
+  --card2:     #1a1a1a;
+  --border:    rgba(255,255,255,0.08);
+  --border2:   rgba(255,255,255,0.04);
+  --border3:   rgba(255,255,255,0.06);
+  --nav-bg:    rgba(0,0,0,0.72);
+  --fg:        #ffffff;
+  --fg2:       #000000;
+  --grey1:     #8a8a8a;
+  --grey2:     #555555;
+  --grey3:     #2a2a2a;
+  --screen-bg: #050505;
+  --screen-sb: #0C0C0C;
+  --kpi-bg:    #141414;
+  --proof-bg:  #000000;
+  --shadow-lg: 0 40px 100px rgba(0,0,0,0.7);
+  --glow-c:    rgba(92,200,248,0.22);
+  --glow-p:    rgba(232,136,152,0.18);
+  --glow-m:    rgba(196,160,204,0.14);
+  /* Gradient accent colors */
+  --grad-start: #5CC8F8;
+  --grad-mid:   #C4A0CC;
+  --grad-end:   #E88898;
+  --theme-transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+
+/* ── Light mode overrides ── */
+html[data-theme="light"] {
+  --bg:        #F5F5F7;
+  --bg2:       #FFFFFF;
+  --card:      #FFFFFF;
+  --card2:     #F0F0F2;
+  --border:    rgba(0,0,0,0.08);
+  --border2:   rgba(0,0,0,0.05);
+  --border3:   rgba(0,0,0,0.06);
+  --nav-bg:    rgba(245,245,247,0.82);
+  --fg:        #000000;
+  --fg2:       #ffffff;
+  --grey1:     #6a6a6a;
+  --grey2:     #999999;
+  --grey3:     #e0e0e0;
+  --screen-bg: #F8F8FA;
+  --screen-sb: #EFEFEF;
+  --kpi-bg:    #F5F5F7;
+  --proof-bg:  #F5F5F7;
+  --shadow-lg: 0 40px 100px rgba(0,0,0,0.12);
+  --glow-c:    rgba(92,200,248,0.14);
+  --glow-p:    rgba(232,136,152,0.10);
+  --glow-m:    rgba(196,160,204,0.08);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: var(--theme-transition);
+}
+
+/* ── Global transition on theme switch ── */
+*, *::before, *::after {
+  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+/* Don't slow animations */
+.hero-heading, .hero-heading *, .marquee-track { transition: none !important; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  justify-content: space-between;
+  background: var(--nav-bg);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border-bottom: 1px solid var(--border2);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+}
+.nav-logo-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 11px;
+  color: #000;
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+.nav-logo-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.3px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.nav-links a {
+  display: block;
+  padding: 5px 14px;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--grey1);
+  text-decoration: none;
+  border-radius: 20px;
+  transition: color 0.15s, background 0.15s;
+  letter-spacing: -0.01em;
+}
+.nav-links a:hover {
+  color: var(--fg);
+  background: var(--border3);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-nav-text {
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--grey1);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 20px;
+  transition: color 0.15s;
+  letter-spacing: -0.01em;
+}
+.btn-nav-text:hover { color: var(--fg); }
+
+.btn-nav-pill {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--fg2);
+  background: var(--fg);
+  border: none;
+  cursor: pointer;
+  padding: 7px 18px;
+  border-radius: 100px;
+  letter-spacing: -0.01em;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.btn-nav-pill:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* ─── THEME TOGGLE ─── */
+.theme-toggle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--grey1);
+  transition: color 0.2s, background 0.2s, border-color 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  color: var(--fg);
+  background: var(--card2);
+  transform: rotate(15deg);
+}
+.theme-toggle svg { transition: transform 0.35s ease, opacity 0.25s ease; }
+.icon-sun  { display: none; }
+.icon-moon { display: block; }
+html[data-theme="light"] .icon-sun  { display: block; }
+html[data-theme="light"] .icon-moon { display: none; }
+
+/* ─── HERO ─── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 40px 100px;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ─── GLOW ORBS ─── */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 1100px;
+  height: 700px;
+  background:
+    radial-gradient(ellipse 55% 60% at 28% 45%, var(--glow-c) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 55% at 72% 40%, var(--glow-p) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 50% 60%, var(--glow-m) 0%, transparent 60%);
+  pointer-events: none;
+  animation: glow-breathe 7s ease-in-out infinite alternate;
+}
+@keyframes glow-breathe {
+  0%   { opacity: 0.85; transform: translateX(-50%) scale(1); }
+  100% { opacity: 1;    transform: translateX(-50%) scale(1.06); }
+}
+
+/* Orb spots — hard-edged blobs for depth */
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(70px);
+  animation: orb-float 9s ease-in-out infinite alternate;
+}
+.glow-orb-1 {
+  width: 420px; height: 420px;
+  top: 5%; left: -8%;
+  background: radial-gradient(circle, rgba(92,200,248,0.28) 0%, transparent 70%);
+  animation-delay: 0s; animation-duration: 10s;
+}
+.glow-orb-2 {
+  width: 380px; height: 380px;
+  top: 8%; right: -6%;
+  background: radial-gradient(circle, rgba(232,136,152,0.24) 0%, transparent 70%);
+  animation-delay: -3s; animation-duration: 12s;
+}
+.glow-orb-3 {
+  width: 300px; height: 300px;
+  top: 40%; left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(196,160,204,0.18) 0%, transparent 70%);
+  animation-delay: -6s; animation-duration: 8s;
+}
+@keyframes orb-float {
+  0%   { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(20px, -20px) scale(1.08); }
+}
+.glow-orb-3 { animation-name: orb-float-mid; }
+@keyframes orb-float-mid {
+  0%   { transform: translateX(-50%) translateY(0) scale(1); }
+  100% { transform: translateX(-50%) translateY(-18px) scale(1.1); }
+}
+
+.hero-heading {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(52px, 8.5vw, 108px);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.045em;
+  background: linear-gradient(90deg,
+    var(--grad-start) 0%,
+    #A8C4E8 30%,
+    var(--grad-mid) 60%,
+    var(--grad-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-sub {
+  margin-top: 28px;
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 400;
+  color: var(--grey1);
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  line-height: 1.6;
+  letter-spacing: -0.015em;
+}
+
+/* ─── AWARD BADGE ─── */
+.award-badge {
+  position: relative;
+  z-index: 2;
+  margin-top: 52px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.award-laurel {
+  color: rgba(255,255,255,0.55);
+  display: flex;
+  align-items: center;
+}
+.award-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--fg);
+}
+.award-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+}
+.award-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+}
+.award-subtitle {
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--grey1);
+  letter-spacing: -0.01em;
+}
+
+/* ─── HERO DEVICE ─── */
+.hero-device-wrap {
+  margin-top: 80px;
+  width: 100%;
+  max-width: 1060px;
+  position: relative;
+  z-index: 2;
+}
+
+.device-chrome {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px var(--border2),
+    var(--shadow-lg);
+}
+.device-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.r { background: #FF5F57; }
+.dot.y { background: #FEBC2E; }
+.dot.g { background: #28C840; }
+.addr-bar {
+  flex: 1;
+  margin-left: 10px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  height: 24px;
+  max-width: 260px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 6px;
+}
+.addr-bar-icon { color: var(--grey2); }
+.addr-bar-text {
+  font-size: 11px;
+  color: var(--grey2);
+  letter-spacing: 0.01em;
+}
+
+/* Mini dashboard screen */
+.screen {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--screen-bg);
+  display: flex;
+  overflow: hidden;
+}
+.screen-sidebar {
+  width: 192px;
+  flex-shrink: 0;
+  background: var(--screen-sb);
+  border-right: 1px solid var(--border2);
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.screen-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.screen-logo-box {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
+  flex-shrink: 0;
+}
+.screen-logo-txt {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: -0.3px;
+}
+.s-nav {
+  padding: 6px 9px;
+  border-radius: 7px;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--grey2);
+  display: flex; align-items: center; gap: 7px;
+  transition: all 0.15s;
+}
+.s-nav.active {
+  background: rgba(92,200,248,0.1);
+  color: var(--grad-start);
+}
+.s-nav-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+.screen-main {
+  flex: 1;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+  background: var(--screen-bg);
+}
+.screen-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.screen-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: -0.03em;
+}
+.screen-pills {
+  display: flex; gap: 4px;
+}
+.s-pill {
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 500;
+  background: rgba(255,255,255,0.05);
+  color: var(--grey2);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.s-pill.active {
+  background: rgba(92,200,248,0.1);
+  color: var(--grad-start);
+  border-color: rgba(92,200,248,0.2);
+}
+
+.kpi-row-screen {
+  display: flex;
+  gap: 10px;
+}
+.kpi-sc {
+  flex: 1;
+  background: var(--kpi-bg);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.kpi-sc-label {
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--grey2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.kpi-sc-val {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--fg);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+.kpi-sc-delta { font-size: 8.5px; font-weight: 600; color: #5CC8F8; margin-top: 3px; }
+
+.chart-area {
+  flex: 1;
+  display: flex;
+  gap: 10px;
+  min-height: 0;
+}
+.chart-big {
+  flex: 2;
+  background: var(--kpi-bg);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.chart-sm {
+  flex: 1;
+  background: var(--kpi-bg);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.chart-label {
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--grey2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.bars {
+  position: absolute;
+  bottom: 10px; left: 10px; right: 10px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 65%;
+}
+.bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+}
+.bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(92,200,248,0.5), rgba(196,160,204,0.5));
+}
+.bar.hi::after {
+  background: linear-gradient(to top, var(--grad-start), var(--grad-mid));
+  opacity: 0.9;
+}
+.donut {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #5CC8F8 0deg 175deg,
+    #C4A0CC 175deg 250deg,
+    #E88898 250deg 300deg,
+    rgba(255,255,255,0.07) 300deg 360deg
+  );
+  position: relative;
+}
+.donut::after {
+  content: '';
+  position: absolute;
+  inset: 13px;
+  background: var(--kpi-bg);
+  border-radius: 50%;
+}
+
+/* ─── HORIZONTAL RULE SECTION ─── */
+.marquee-belt {
+  border-top: 1px solid var(--border2);
+  border-bottom: 1px solid var(--border2);
+  overflow: hidden;
+  padding: 18px 0;
+}
+.marquee-track {
+  display: flex;
+  gap: 40px;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+  align-items: center;
+}
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.m-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--grey2);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.m-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--grey3); }
+.m-tag {
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--grad-start);
+  background: rgba(92,200,248,0.1);
+  border: 1px solid rgba(92,200,248,0.2);
+  letter-spacing: 0.02em;
+}
+
+/* ─── SECTION BASE ─── */
+.section { position: relative; }
+.inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ─── SECTION: NOT LIMITED ─── */
+.sect-limit {
+  padding: 120px 0 80px;
+}
+.sect-eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey1);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.sect-h2 {
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--fg);
+  max-width: 680px;
+}
+.sect-sub {
+  margin-top: 18px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--grey1);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  max-width: 460px;
+}
+
+/* tabs like Play's feature toggle */
+.feature-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 48px;
+  border-bottom: 1px solid var(--border2);
+  padding-bottom: 0;
+}
+.f-tab {
+  padding: 10px 20px;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--grey1);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+  letter-spacing: -0.01em;
+}
+.f-tab:hover { color: var(--fg); }
+.f-tab.active {
+  color: var(--fg);
+  border-bottom-color: var(--fg);
+  font-weight: 500;
+  font-weight: 500;
+}
+
+.feature-panels {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 60px;
+  align-items: center;
+}
+.feature-panel-text { }
+.feature-panel-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--fg);
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.feature-panel-desc {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--grey1);
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+}
+.feature-panel-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: opacity 0.15s;
+}
+.feature-panel-link:hover { opacity: 0.7; }
+
+.feature-panel-visual {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.panel-visual-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.02);
+}
+.panel-visual-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--grey1);
+  letter-spacing: -0.01em;
+}
+.panel-live-dot {
+  width: 6px; height: 6px;
+  background: var(--grad-start);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--grad-start);
+  animation: blink 2s ease infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.panel-visual-body {
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.kpi-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+}
+.kpi-line-label {
+  flex: 1;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--grey1);
+  letter-spacing: -0.01em;
+}
+.kpi-line-track {
+  width: 90px;
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.kpi-line-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--grad-start), var(--grad-mid));
+}
+.kpi-line-val {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--fg);
+  letter-spacing: -0.02em;
+  min-width: 44px;
+  text-align: right;
+}
+
+/* ─── SECTION: LIQUID GLASS ─── */
+.sect-glass {
+  padding: 80px 0 140px;
+  border-top: 1px solid var(--border2);
+}
+.glass-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.glass-visual {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 40px 80px rgba(0,0,0,0.6),
+    0 0 60px rgba(92,200,248,0.04);
+}
+.glass-screen {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--screen-bg);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 14px;
+}
+.glass-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.glass-h { font-size: 13px; font-weight: 700; color: var(--fg); letter-spacing: -0.03em; }
+.glass-badge {
+  font-size: 10px; font-weight: 600;
+  color: var(--grad-start);
+  background: rgba(92,200,248,0.1);
+  border: 1px solid rgba(92,200,248,0.25);
+  padding: 3px 8px; border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+.glass-bars-wrap {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.g-bar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  background: rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
+.g-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(92,200,248,0.3), rgba(196,160,204,0.3));
+}
+.g-bar.peak::after {
+  background: linear-gradient(to top, var(--grad-start), var(--grad-mid));
+  opacity: 0.85;
+}
+.glass-footer {
+  display: flex;
+  gap: 10px;
+}
+.glass-stat {
+  flex: 1;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.gs-label { font-size: 8.5px; color: var(--grey2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.gs-val { font-size: 16px; font-weight: 800; color: var(--fg); letter-spacing: -0.04em; }
+.gs-d { font-size: 9px; font-weight: 600; color: var(--grad-start); margin-top: 2px; }
+
+/* floating card */
+.float-card {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  background: var(--card);
+  border: 1px solid rgba(92,200,248,0.2);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 16px rgba(92,200,248,0.06);
+  z-index: 2;
+}
+.float-dot {
+  width: 7px; height: 7px;
+  background: var(--grad-start);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--grad-start);
+  animation: blink 2.5s ease infinite;
+  flex-shrink: 0;
+}
+.float-text {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--fg);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.glass-text { }
+.checklist { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+.check-icon {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(92,200,248,0.1);
+  border: 1px solid rgba(92,200,248,0.2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+  color: var(--grad-start);
+}
+.check-txt {
+  font-size: 14.5px;
+  font-weight: 400;
+  color: var(--grey1);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+}
+
+/* ─── SECTION: TESTIMONIALS ─── */
+.sect-proof {
+  padding: 100px 0;
+  border-top: 1px solid var(--border2);
+}
+.proof-h2 {
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--fg);
+  text-align: center;
+  margin-bottom: 56px;
+}
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border2);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.proof-card {
+  background: var(--proof-bg);
+  padding: 32px 28px;
+}
+.proof-card:first-child { border-radius: 16px 0 0 16px; }
+.proof-card:last-child { border-radius: 0 16px 16px 0; }
+.p-quote {
+  font-size: 14.5px;
+  font-weight: 400;
+  color: var(--grey1);
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+.p-quote strong { color: var(--fg); font-weight: 600; }
+.p-author { display: flex; align-items: center; gap: 10px; }
+.p-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(92,200,248,0.2), rgba(232,136,152,0.2));
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.p-name { font-size: 13px; font-weight: 600; color: var(--fg); letter-spacing: -0.02em; }
+.p-role { font-size: 11.5px; font-weight: 400; color: var(--grey2); letter-spacing: -0.01em; margin-top: 1px; }
+
+/* ─── CTA ─── */
+.sect-cta {
+  padding: 100px 0 140px;
+}
+.cta-wrap {
+  text-align: center;
+  padding: 80px 40px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: linear-gradient(160deg, rgba(92,200,248,0.04) 0%, rgba(232,136,152,0.03) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.cta-wrap::before {
+  content: '';
+  position: absolute;
+  top: -80px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 400px;
+  background: radial-gradient(ellipse at center, rgba(92,200,248,0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+.cta-h2 {
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  background: linear-gradient(90deg, var(--grad-start) 0%, var(--grad-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+.cta-sub {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--grey1);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  max-width: 400px;
+  margin: 0 auto 36px;
+  position: relative;
+  z-index: 1;
+}
+.cta-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #000;
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  padding: 12px 24px;
+  border-radius: 100px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.btn-white:hover { opacity: 0.88; transform: translateY(-1px); }
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--grey1);
+  background: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  padding: 12px 22px;
+  border-radius: 100px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s, transform 0.15s;
+}
+.btn-outline:hover { color: var(--fg); border-color: var(--border); filter: brightness(1.2); transform: translateY(-1px); }
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid var(--border2);
+  padding: 36px 40px;
+}
+.foot-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.foot-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+.foot-links a {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--grey2);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: color 0.15s;
+}
+.foot-links a:hover { color: var(--fg); }
+.foot-copy {
+  font-size: 12.5px;
+  color: var(--grey2);
+  letter-spacing: -0.01em;
+}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">AR</div>
+    <span class="nav-logo-name">Agilysys HSG</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Platform</a></li>
+    <li><a href="#">Analytics</a></li>
+    <li><a href="#">Integrations</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#">Docs</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
+      <!-- Moon (dark mode icon) -->
+      <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <!-- Sun (light mode icon) -->
+      <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <button class="btn-nav-text">Sign in</button>
+    <button class="btn-nav-pill">Get started</button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <!-- Glow orbs -->
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  <div class="glow-orb glow-orb-3"></div>
+
+  <h1 class="hero-heading">
+    Analyze, forecast,&nbsp;&amp; decide with<br>the power of AR&nbsp;AI.
+  </h1>
+  <p class="hero-sub">
+    AR Intelligence is built into your analytics canvas — helping you surface insights, catch revenue leakage, and make decisions without leaving your flow.
+  </p>
+
+  <!-- Award badge -->
+  <div class="award-badge">
+    <!-- Left laurel -->
+    <svg class="award-laurel" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 28C8 24 7 20 8 16C9 12 11 9 14 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M8 22C5 20 3 17 4 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M10 26C7 27 4 26 3 23" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M11 17C9 14 9 11 11 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M13 12C12 9 13 6 15 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M10 28L11 32" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Apple-style icon -->
+    <svg class="award-icon" viewBox="0 0 28 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18.5 7.2C18.9 6.6 19.2 5.8 19.2 5C19.2 4.9 19.2 4.8 19.2 4.7C18.4 4.7 17.4 5.2 16.8 5.8C16.3 6.4 15.9 7.2 15.9 8.1C15.9 8.2 15.9 8.2 16 8.2C16.8 8.2 17.9 7.8 18.5 7.2Z"/>
+      <path d="M21.5 14.4C21.5 12.5 22.4 11.5 24.2 10.4C23.2 9.0 21.7 8.2 20.0 8.2C18.4 8.2 17.5 9.0 16.5 9.0C15.4 9.0 14.3 8.2 12.9 8.2C10.3 8.2 7.7 10.2 7.7 14.4C7.7 17.0 8.7 19.7 10.0 21.5C11.1 23.0 12.1 24.2 13.5 24.2C14.8 24.2 15.4 23.4 17.0 23.4C18.6 23.4 19.1 24.2 20.5 24.2C21.9 24.2 22.9 22.9 24.0 21.4C24.4 20.8 24.7 20.2 25.0 19.5C22.8 18.6 21.5 16.7 21.5 14.4Z"/>
+    </svg>
+
+    <div class="award-text">
+      <span class="award-title">Apple Design Award</span>
+      <span class="award-subtitle">2025 Innovation Winner</span>
+    </div>
+
+    <!-- Right laurel -->
+    <svg class="award-laurel" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1)">
+      <path d="M10 28C8 24 7 20 8 16C9 12 11 9 14 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M8 22C5 20 3 17 4 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M10 26C7 27 4 26 3 23" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M11 17C9 14 9 11 11 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M13 12C12 9 13 6 15 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M10 28L11 32" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Device mockup -->
+  <div class="hero-device-wrap reveal">
+    <div class="device-chrome">
+      <div class="device-bar">
+        <div class="dot r"></div>
+        <div class="dot y"></div>
+        <div class="dot g"></div>
+        <div class="addr-bar">
+          <svg class="addr-bar-icon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span class="addr-bar-text">app.agilysys-hsg.io</span>
+        </div>
+      </div>
+      <div class="screen">
+        <div class="screen-sidebar">
+          <div class="screen-logo">
+            <div class="screen-logo-box"></div>
+            <span class="screen-logo-txt">Agilysys HSG</span>
+          </div>
+          <div class="s-nav active"><span class="s-nav-dot"></span>Overview</div>
+          <div class="s-nav"><span class="s-nav-dot"></span>Revenue</div>
+          <div class="s-nav"><span class="s-nav-dot"></span>Guests</div>
+          <div class="s-nav"><span class="s-nav-dot"></span>Properties</div>
+          <div class="s-nav"><span class="s-nav-dot"></span>F&amp;B</div>
+          <div class="s-nav"><span class="s-nav-dot"></span>Forecast</div>
+          <div class="s-nav"><span class="s-nav-dot"></span>Reports</div>
+        </div>
+        <div class="screen-main">
+          <div class="screen-topbar">
+            <span class="screen-title">Dashboard Overview</span>
+            <div class="screen-pills">
+              <div class="s-pill active">MTD</div>
+              <div class="s-pill">QTD</div>
+              <div class="s-pill">YTD</div>
+            </div>
+          </div>
+          <div class="kpi-row-screen">
+            <div class="kpi-sc">
+              <div class="kpi-sc-label">RevPAR</div>
+              <div class="kpi-sc-val">$247</div>
+              <div class="kpi-sc-delta">↑ 12.4%</div>
+            </div>
+            <div class="kpi-sc">
+              <div class="kpi-sc-label">Occupancy</div>
+              <div class="kpi-sc-val">87%</div>
+              <div class="kpi-sc-delta">↑ 4.1%</div>
+            </div>
+            <div class="kpi-sc">
+              <div class="kpi-sc-label">ADR</div>
+              <div class="kpi-sc-val">$284</div>
+              <div class="kpi-sc-delta">↑ 8.9%</div>
+            </div>
+            <div class="kpi-sc">
+              <div class="kpi-sc-label">NPS Score</div>
+              <div class="kpi-sc-val">74</div>
+              <div class="kpi-sc-delta">↑ 6pts</div>
+            </div>
+          </div>
+          <div class="chart-area">
+            <div class="chart-big">
+              <div class="chart-label">Revenue Trend</div>
+              <div class="bars">
+                <div class="bar" style="height:52%"></div>
+                <div class="bar" style="height:68%"></div>
+                <div class="bar" style="height:59%"></div>
+                <div class="bar" style="height:82%"></div>
+                <div class="bar hi" style="height:76%"></div>
+                <div class="bar" style="height:91%"></div>
+                <div class="bar hi" style="height:100%"></div>
+                <div class="bar" style="height:88%"></div>
+                <div class="bar" style="height:73%"></div>
+              </div>
+            </div>
+            <div class="chart-sm">
+              <div class="chart-label">Segment Mix</div>
+              <div class="donut"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-belt">
+  <div class="marquee-track">
+    <div class="m-item"><span class="m-tag">NEW</span> Liquid Glass Analytics</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Real-time RevPAR Streaming</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Predictive Demand Forecasting</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Cross-property Benchmarking</div>
+    <div class="m-sep"></div>
+    <div class="m-item"><span class="m-tag">AI</span> Anomaly Detection</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Guest Sentiment Analysis</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Unified F&amp;B + Rooms Reporting</div>
+    <div class="m-sep"></div>
+    <!-- duplicate -->
+    <div class="m-item"><span class="m-tag">NEW</span> Liquid Glass Analytics</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Real-time RevPAR Streaming</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Predictive Demand Forecasting</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Cross-property Benchmarking</div>
+    <div class="m-sep"></div>
+    <div class="m-item"><span class="m-tag">AI</span> Anomaly Detection</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Guest Sentiment Analysis</div>
+    <div class="m-sep"></div>
+    <div class="m-item">Unified F&amp;B + Rooms Reporting</div>
+  </div>
+</div>
+
+<!-- ── NOT LIMITED ── -->
+<section class="section sect-limit">
+  <div class="inner">
+    <div class="sect-eyebrow reveal">Why AR Intelligence</div>
+    <h2 class="sect-h2 reveal">Don't be limited by your traditional analytics tools.</h2>
+    <p class="sect-sub reveal">Spreadsheets, siloed reports, and disconnected systems slow every decision. AR Intelligence unifies your data in one intelligent canvas.</p>
+
+    <div class="feature-tabs reveal">
+      <div class="f-tab active">Real-time KPIs</div>
+      <div class="f-tab">AI Forecasting</div>
+      <div class="f-tab">Multi-property</div>
+      <div class="f-tab">Anomaly Alerts</div>
+    </div>
+
+    <div class="feature-panels reveal">
+      <div class="feature-panel-text">
+        <div class="feature-panel-title">Live data. Zero refresh cycles.</div>
+        <div class="feature-panel-desc">Every metric — RevPAR, ADR, occupancy, F&B, spa — streams in real-time from your PMS, POS, and CRS. No manual exports. No stale numbers.</div>
+        <a href="#" class="feature-panel-link">
+          Explore the platform
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="feature-panel-visual">
+        <div class="panel-visual-header">
+          <span class="panel-visual-title">Revenue by Segment — MTD</span>
+          <div class="panel-live-dot"></div>
+        </div>
+        <div class="panel-visual-body">
+          <div class="kpi-line">
+            <span class="kpi-line-label">Transient</span>
+            <div class="kpi-line-track"><div class="kpi-line-fill" style="width:82%"></div></div>
+            <span class="kpi-line-val">$2.4M</span>
+          </div>
+          <div class="kpi-line">
+            <span class="kpi-line-label">Group</span>
+            <div class="kpi-line-track"><div class="kpi-line-fill" style="width:65%"></div></div>
+            <span class="kpi-line-val">$1.9M</span>
+          </div>
+          <div class="kpi-line">
+            <span class="kpi-line-label">Corporate</span>
+            <div class="kpi-line-track"><div class="kpi-line-fill" style="width:48%"></div></div>
+            <span class="kpi-line-val">$1.4M</span>
+          </div>
+          <div class="kpi-line">
+            <span class="kpi-line-label">Wholesale</span>
+            <div class="kpi-line-track"><div class="kpi-line-fill" style="width:30%"></div></div>
+            <span class="kpi-line-val">$876K</span>
+          </div>
+          <div class="kpi-line">
+            <span class="kpi-line-label">OTA</span>
+            <div class="kpi-line-track"><div class="kpi-line-fill" style="width:20%"></div></div>
+            <span class="kpi-line-val">$642K</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LIQUID GLASS SECTION ── -->
+<section class="section sect-glass">
+  <div class="inner">
+    <div class="glass-layout">
+      <div class="glass-visual reveal" style="position: relative;">
+        <div class="glass-screen">
+          <div class="glass-header-row">
+            <span class="glass-h">Demand Forecast — Next 90 Days</span>
+            <span class="glass-badge">AI LIVE</span>
+          </div>
+          <div class="glass-bars-wrap">
+            <div class="g-bar" style="height:48%"></div>
+            <div class="g-bar" style="height:62%"></div>
+            <div class="g-bar" style="height:55%"></div>
+            <div class="g-bar peak" style="height:88%"></div>
+            <div class="g-bar" style="height:75%"></div>
+            <div class="g-bar peak" style="height:100%"></div>
+            <div class="g-bar" style="height:82%"></div>
+            <div class="g-bar" style="height:70%"></div>
+            <div class="g-bar" style="height:58%"></div>
+            <div class="g-bar" style="height:64%"></div>
+          </div>
+          <div class="glass-footer">
+            <div class="glass-stat">
+              <div class="gs-label">Peak Occ.</div>
+              <div class="gs-val">96%</div>
+              <div class="gs-d">Week 8</div>
+            </div>
+            <div class="glass-stat">
+              <div class="gs-label">Avg ADR</div>
+              <div class="gs-val">$298</div>
+              <div class="gs-d">↑ 9.2%</div>
+            </div>
+            <div class="glass-stat">
+              <div class="gs-label">Revenue</div>
+              <div class="gs-val">$8.4M</div>
+              <div class="gs-d">Projected</div>
+            </div>
+          </div>
+        </div>
+        <div class="float-card">
+          <div class="float-dot"></div>
+          <span class="float-text">+14.2% vs last year</span>
+        </div>
+      </div>
+
+      <div class="glass-text reveal">
+        <div class="sect-eyebrow">Predictive AI</div>
+        <h2 class="sect-h2">Forecast with real<br>Liquid Glass data.</h2>
+        <p class="sect-sub">Our AI layer monitors every signal and surfaces demand shifts, revenue opportunities, and risk — 90 days ahead.</p>
+        <div class="checklist">
+          <div class="check-item">
+            <div class="check-icon">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <span class="check-txt">Demand forecasting up to 90 days out across all segments</span>
+          </div>
+          <div class="check-item">
+            <div class="check-icon">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <span class="check-txt">Automated revenue leakage alerts by department and property</span>
+          </div>
+          <div class="check-item">
+            <div class="check-icon">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <span class="check-txt">Rate parity monitoring across all OTA channels in real-time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="section sect-proof">
+  <div class="inner">
+    <h2 class="proof-h2 reveal">Trusted by hospitality leaders.</h2>
+    <div class="proof-grid reveal">
+      <div class="proof-card">
+        <p class="p-quote">"We cut monthly reporting from <strong>4 days to 20 minutes</strong>. The AI surfaces exactly what needs attention — we act instead of searching."</p>
+        <div class="p-author">
+          <div class="p-avatar"></div>
+          <div>
+            <div class="p-name">Sarah Chen</div>
+            <div class="p-role">VP Revenue, Meridian Hotels</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <p class="p-quote">"Finally one platform for Rooms, F&B, and Spa. <strong>Cross-property benchmarking alone</strong> uncovered $2.4M in annual opportunity."</p>
+        <div class="p-author">
+          <div class="p-avatar"></div>
+          <div>
+            <div class="p-name">Marcus Torres</div>
+            <div class="p-role">COO, Pinnacle Resort Group</div>
+          </div>
+        </div>
+      </div>
+      <div class="proof-card">
+        <p class="p-quote">"Anomaly detection caught a POS issue <strong>costing $8K/month</strong> within the first week. It paid for itself before the trial ended."</p>
+        <div class="p-author">
+          <div class="p-avatar"></div>
+          <div>
+            <div class="p-name">Priya Nair</div>
+            <div class="p-role">Director Analytics, Azure Stays</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="section sect-cta">
+  <div class="inner">
+    <div class="cta-wrap reveal">
+      <h2 class="cta-h2">See your data clearly.</h2>
+      <p class="cta-sub">Join hundreds of properties using AR Intelligence to unlock revenue they didn't know was being left behind.</p>
+      <div class="cta-btns">
+        <a href="#" class="btn-white">
+          Get started free
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#" class="btn-outline">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="foot-inner">
+    <a class="nav-logo" href="#" style="text-decoration:none">
+      <div class="nav-logo-icon">AR</div>
+      <span class="nav-logo-name">Agilysys HSG</span>
+    </a>
+    <ul class="foot-links">
+      <li><a href="#">Platform</a></li>
+      <li><a href="#">Integrations</a></li>
+      <li><a href="#">Security</a></li>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+    <span class="foot-copy">© 2026 Agilysys HSG</span>
+  </div>
+</footer>
+
+<script>
+// ── Theme toggle ──
+const btn = document.getElementById('themeBtn');
+const html = document.documentElement;
+// Respect system preference on first load
+if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+  html.setAttribute('data-theme', 'light');
+}
+btn.addEventListener('click', () => {
+  const isLight = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  localStorage.setItem('theme', isLight ? 'dark' : 'light');
+});
+// Restore saved preference
+const saved = localStorage.getItem('theme');
+if (saved) html.setAttribute('data-theme', saved);
+
+// ── Scroll reveal ──
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ── Feature tabs ──
+document.querySelectorAll('.f-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.f-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
